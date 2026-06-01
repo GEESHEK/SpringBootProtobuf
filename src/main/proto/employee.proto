@@ -1,0 +1,47 @@
+syntax = "proto3";
+option java_multiple_files=true; //one file for message
+option java_outer_classname="EmployeeProto";
+option java_package="com.gee";
+import  "google/protobuf/timestamp.proto";
+package com.gee;
+
+message Employee{
+  int32 id=1; //field tags, the number to serialise and deserialize, more compact and faster vs json
+  string name=2;
+  double salary=3;
+  repeated Department departments=4;
+  map<string,string> addressMap=5;
+  bool isActive=6;
+  bytes profilePicture=7;
+  google.protobuf.Timestamp joinDate=8;
+}
+
+message Department{
+  int32 id=1;
+  string name=2;
+}
+
+//message EmployeeRequest{
+//  int32 id=1;
+//}
+
+message EmployeeList{
+  repeated Employee employees=1;
+}
+
+message Empty{}
+
+//the service in proto is like a contract in java interface
+//need to implement the methods
+service EmployeeService{
+
+    //get employee by id, must pass message
+    //GRPC localhost:8080/com.gee.EmployeeService/getEmployee
+    rpc getEmployee(Employee) returns (Employee);
+
+    //add an employee
+    rpc addEmployee(Employee) returns (Employee);
+
+    //get all the employees, must pass something even in a get
+    rpc getAllEmployees(Empty) returns (EmployeeList);
+}
