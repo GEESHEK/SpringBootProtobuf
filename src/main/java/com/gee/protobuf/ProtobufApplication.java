@@ -15,4 +15,5 @@ public class ProtobufApplication {
 		SpringApplication.run(ProtobufApplication.class, args);
 	}
 	//adding random commit 1
+	//adding random commit 2
 }
